@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Email with Mailgun, Gmail, and Custom Domains"
+title: "How to email with your own domain -- free!"
 description: ""
 category: protip
 tags: [email, gmail, mailgun]
