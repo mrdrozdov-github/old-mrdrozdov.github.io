@@ -14,7 +14,7 @@ module.exports = React.createClass
   render: ->
     post = @props.route.page.data
 
-    <DocumentTitle title="#{post.title} | Kyle Mathews">
+    <DocumentTitle title="#{post.title} | Andrew Drozdov">
       <div className="markdown">
         <h1>{post.title}</h1>
         <div dangerouslySetInnerHTML={{__html: post.body}}/>
@@ -38,7 +38,7 @@ module.exports = React.createClass
           }}
         >
           <img
-            src="/kyle-round-small-pantheon.jpg"
+            src="/me.jpg"
             style={{
               float: 'left'
               marginRight: rhythm(1/4)
@@ -47,12 +47,12 @@ module.exports = React.createClass
               height: rhythm(2)
             }}
           />
-          <strong>{config.authorName}</strong> lives and works in San Francisco building useful things. <a href="https://twitter.com/kylemathews">You should follow him on Twitter</a>
+          <strong>{config.authorName}</strong> likes to build things and help people. <a href="https://twitter.com/mrdrozdov">You should follow him on Twitter</a>
         </p>
         <DisqusThread
-          shortname="kylemathews"
+          shortname="mrdrozdov"
           title={post.title}
-          url={"http://bricolage.io#{@props.route.page.path}"}
+          url={"http://mrdrozdov.com#{@props.route.page.path}"}
         />
       </div>
     </DocumentTitle>

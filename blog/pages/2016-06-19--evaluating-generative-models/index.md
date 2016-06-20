@@ -18,4 +18,11 @@ https://www.reddit.com/r/hearthstone/comments/3cyi15/hearthstone_cards_as_create
 
 Use Cases of Generative Models?
 
+What would be a simply generative model? There's a language model.
+
+http://karpathy.github.io/
+https://openai.com/blog/generative-models/
+http://cs.stanford.edu/people/karpathy/gan/
+http://soumith.ch/eyescream/ (images being generated in the background)
+
 [0]: http://www.blogherald.com/2005/10/10/the-blog-herald-blog-count-october-2005/

@@ -13,11 +13,11 @@ module.exports = React.createClass
     if @props.page
       description = prune(@props.page.data?.body.replace(/<[^>]*>/g, ''), 200)
       if @props.page?.path is "/"
-        title = "Kyle Mathews"
+        title = "Andrew Drozdov"
       else if @props.page?.data?.title?
-        title = @props.page.data.title + " | Kyle Mathews"
+        title = @props.page.data.title + " | Andrew Drozdov"
       else
-        title = "Kyle Mathews"
+        title = "Andrew Drozdov"
 
     if process.env.NODE_ENV is "production"
       css = <style dangerouslySetInnerHTML={{__html: require('!raw!./public/styles.css')}} />
@@ -32,15 +32,15 @@ module.exports = React.createClass
 
         <meta property="twitter:account_id" content="10907062"/>
         <meta name="twitter:card" content="summary"/>
-        <meta name="twitter:site" content="@kylemathews"/>
+        <meta name="twitter:site" content="@mrdrozdov"/>
         <meta name="twitter:title" content={title}/>
         <meta name="twitter:description" content={description}/>
 
         <meta property="og:title" content={title}/>
         <meta property="og:type" content="article"/>
-        <meta property="og:url" content="http://bricolage.io#{@props.page?.path}"/>
+        <meta property="og:url" content="http://blog.mrdrozdov.com#{@props.page?.path}"/>
         <meta property="og:description" content={description}/>
-        <meta property="og:site_name" content="Bricolage — a blog by Kyle Mathews"/>
+        <meta property="og:site_name" content="A blog by Andrew Drozdov"/>
         <meta property="fb:admins" content="17830631"/>
         <link rel="shortcut icon" href={@props.favicon}/>
         <TypographyStyle/>
@@ -71,7 +71,7 @@ module.exports = React.createClass
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-            ga('create', 'UA-774017-3', 'auto');
+            ga('create', 'UA-79584451-1', 'auto');
             ga('send', 'pageview');
           """}}
         />

@@ -19,14 +19,14 @@ module.exports = (pages, callback) ->
 
 generateAtomFeed = (pages) ->
   feed = new Feed({
-    title:       'Bricolage',
-    description: 'A blog by Kyle Mathews',
-    link:        'http://bricolage.io/',
-    id:        'http://bricolage.io/',
-    copyright:   'All rights reserved 2016, Kyle Mathews',
+    title:       'Andrew Drozdov\'s Blog',
+    description: 'A blog by Andrew Drozdov',
+    link:        'http://mrdrozdov.com/',
+    id:        'http://mrdrozdov.com/',
+    copyright:   'All rights reserved 2016, Andrew Drozdov',
     author: {
-      name:    'Kyle Mathews',
-      email:   'mathews.kyle@gmail.com',
+      name:    'Andrew Drozdov',
+      email:   'andrew@mrdrozdov.com',
     }
   })
 
@@ -38,8 +38,8 @@ generateAtomFeed = (pages) ->
   ).slice(0,10)
     feed.addItem({
       title: page.data.title
-      id: "http://bricolage.io#{page.path}"
-      link: "http://bricolage.io#{page.path}"
+      id: "http://mrdrozdov.com#{page.path}"
+      link: "http://mrdrozdov.com#{page.path}"
       date: moment(page.data.date).toDate()
       content: md.render(
         frontmatter(
@@ -50,16 +50,16 @@ generateAtomFeed = (pages) ->
         ).body
       )
       author: [{
-        name: "Kyle Mathews"
-        email: "mathews.kyle@gmail.com"
-        link: "http://bricolage.io"
+        name: "Andrew Drozdov"
+        email: "andrew@mrdrozdov.com"
+        link: "http://mrdrozdov.com"
       }]
     })
 
   feed.addContributor({
-    name: 'Kyle Mathews'
-    email: 'mathews.kyle@gmail.com'
-    link: 'http://bricolage.io'
+    name: 'Andrew Drozdov'
+    email: 'andrew@mrdrozdov.com'
+    link: 'http://mrdrozdov.com'
   })
 
   fs.writeFileSync "#{__dirname}/public/atom.xml", feed.render('atom-1.0')

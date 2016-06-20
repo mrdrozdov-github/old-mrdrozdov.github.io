@@ -1,6 +1,3 @@
-blog
-====
+Blog
 
-my blog!
-
-Visit the actual site at http://bricolage.io
+original theme: https://github.com/KyleAMathews/blog
