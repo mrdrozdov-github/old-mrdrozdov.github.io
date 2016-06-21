@@ -8,7 +8,7 @@ fs = require 'fs'
 prompt.start()
 
 prompt.get(['title'], (err, result) ->
-  dir = "./content/#{ moment().format('YYYY-MM-DD') }---#{ _str.slugify(result.title) }"
+  dir = "./pages/#{ moment().format('YYYY-MM-DD') }---#{ _str.slugify(result.title) }"
   mkdirp.sync(dir)
 
   postFileStr = "---\n"
