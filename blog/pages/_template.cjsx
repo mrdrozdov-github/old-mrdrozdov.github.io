@@ -45,7 +45,7 @@ module.exports = React.createClass
         </h3>
       )
 
-    <DocumentTitle title="Kyle Mathews">
+    <DocumentTitle title="Andrew Drozdov">
       <Container
         style={{
           maxWidth: rhythm(24)

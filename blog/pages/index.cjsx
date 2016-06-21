@@ -28,12 +28,6 @@ module.exports = React.createClass
         )
 
     <div>
-      <p
-        style={{
-          marginBottom: rhythm(2.5)
-        }}
-      >
-      </p>
       <ul>
         {pageLinks}
       </ul>
