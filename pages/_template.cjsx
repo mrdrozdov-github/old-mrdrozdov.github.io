@@ -14,9 +14,9 @@ module.exports = React.createClass
       header = (
         <h1
           style={{
-            fontSize: fontSizeToMS(1.5).fontSize
-            lineHeight: fontSizeToMS(1.5).lineHeight
-            marginBottom: rhythm(1.5)
+            fontSize: fontSizeToMS(1).fontSize
+            lineHeight: fontSizeToMS(1).lineHeight
+            marginBottom: rhythm(1)
           }}
         >
           <Link
@@ -48,7 +48,8 @@ module.exports = React.createClass
     <DocumentTitle title="Andrew Drozdov">
       <Container
         style={{
-          maxWidth: rhythm(24)
+          minWidth: rhythm(28)
+          maxWidth: rhythm(34)
           padding: "#{rhythm(4)} #{rhythm(1/2)} #{rhythm(2)} #{rhythm(1/2)}"
         }}
       >

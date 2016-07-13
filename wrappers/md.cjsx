@@ -13,19 +13,22 @@ module.exports = React.createClass
 
   render: ->
     post = @props.route.page.data
+    page = @props.route.page
 
     <DocumentTitle title="#{post.title} | Andrew Drozdov">
       <div className="markdown">
-        <h1>{post.title}</h1>
-        <div dangerouslySetInnerHTML={{__html: post.body}}/>
-        <em
+        <h3><a href="#{page.path}">{post.title}</a></h3>
+        <small 
           style={{
-            display: 'block'
-            marginBottom: rhythm(2)
-          }}
-        >
-          Posted {moment(post.date).format('MMMM D, YYYY')}
-        </em>
+            display: "block"
+          }}>
+          <span
+            className="label label-primary"
+            
+          >{moment(post.date).format('YYYY.MM.DD')}</span>
+        </small>
+        <br/>
+        <div dangerouslySetInnerHTML={{__html: post.body}}/>
         <hr
           style={{
             marginBottom: rhythm(2)
@@ -40,6 +43,7 @@ module.exports = React.createClass
           <img
             src="/me.jpg"
             style={{
+              borderRadius: rhythm(1/4)
               float: 'left'
               marginRight: rhythm(1/4)
               marginBottom: 0
