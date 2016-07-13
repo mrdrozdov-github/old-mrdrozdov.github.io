@@ -12,7 +12,7 @@ All this cleaning got me curious. Where do I fall in the realm of Github repo ho
 
 > One thing to know about the [Github API](https://developer.github.com/v3/repos/) is that unauthenticated requests are rate limited at 60 per hour. Authenticated ones are limited at 5000 per hour.
 
-> To deal with rate limit, I used the Unix `at` command and collected my data on a Digital Ocean instance. An example command that I'd run would be `at now +2 hours` followed by `at> python get-repo-stats.py <starting-point>` > results.<starting-point>.out`. I ran my stat collecting script once first to approximate how far it'd get, which allowed me to estimate the intervals between each starting point. This is a bit hacky, but I threw this all together in about a day and a half. I'll know better next time, I promise. ;)
+> To deal with rate limit, I used the Unix `at` command and collected my data on a Digital Ocean instance. An example command that I'd run would be `at now +2 hours` followed by `at> python get-repo-stats.py <starting-point> > results.<starting-point>.out`. I ran my stat collecting script once first to approximate how far it'd get, which allowed me to estimate the intervals between each starting point. This is a bit hacky, but I threw this all together in about a day and a half. I'll know better next time, I promise. ;)
 
 A chart showing users and their total repo counts (usernames removed):
 

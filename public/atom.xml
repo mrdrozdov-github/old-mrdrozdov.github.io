@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>http://mrdrozdov.com/</id>
     <title>Andrew Drozdov&apos;s Blog</title>
-    <updated>2016-07-13T04:43:19Z</updated>
+    <updated>2016-07-13T04:46:13Z</updated>
     <author>
         <name>Andrew Drozdov</name>
         <email>andrew@mrdrozdov.com</email>
@@ -163,7 +163,7 @@ def pseudo_and_surely_buggy_extended_slice(my_list, start, stop, step):
 <p>One thing to know about the <a href="https://developer.github.com/v3/repos/">Github API</a> is that unauthenticated requests are rate limited at 60 per hour. Authenticated ones are limited at 5000 per hour.</p>
 </blockquote>
 <blockquote>
-<p>To deal with rate limit, I used the Unix <code>at</code> command and collected my data on a Digital Ocean instance. An example command that I’d run would be <code>at now +2 hours</code> followed by <code>at&gt; python get-repo-stats.py &lt;starting-point&gt;</code> &gt; results.<starting-point>.out`. I ran my stat collecting script once first to approximate how far it’d get, which allowed me to estimate the intervals between each starting point. This is a bit hacky, but I threw this all together in about a day and a half. I’ll know better next time, I promise. ;)</p>
+<p>To deal with rate limit, I used the Unix <code>at</code> command and collected my data on a Digital Ocean instance. An example command that I’d run would be <code>at now +2 hours</code> followed by <code>at&gt; python get-repo-stats.py &lt;starting-point&gt; &gt; results.&lt;starting-point&gt;.out</code>. I ran my stat collecting script once first to approximate how far it’d get, which allowed me to estimate the intervals between each starting point. This is a bit hacky, but I threw this all together in about a day and a half. I’ll know better next time, I promise. ;)</p>
 </blockquote>
 <p>A chart showing users and their total repo counts (usernames removed):</p>
 <p><img src="http://i.imgur.com/0A4kvOZ.png" alt=""></p>
