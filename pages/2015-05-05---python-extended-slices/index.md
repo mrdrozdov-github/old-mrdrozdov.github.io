@@ -10,9 +10,8 @@ Slices are awesome. They're way more powerful than substring like methods in oth
 
 ```python
 #
-# Slice syntax follows a_list[start:stop:step],
-# with start and stop defaulting to the beginning
-# and end of the list, and step defaulting to 1.
+# Slice syntax follows a_list[start:stop:step], with start and stop defaulting 
+# to the beginning and end of the list, and step defaulting to 1.
 #
 
 >>> my_list = ['A', 'B', 'C', 'D', 'E']
@@ -106,11 +105,11 @@ def indices3(w_slice, space, length):
 
 This is actually not too helpful. It sets some defaults and enforces bounds for start and stop. That was a fun excercise anyway, plus I ended up attempting to build PyPy from scratch. After running make, I was eventually treated to this fractal like graphic that I suppose is an Easter Egg in PyPy.
 
-<img src="http://i.imgur.com/2TH9Wyw.png" width="500px" style="margin-left: auto; margin-right: auto;" />
+<p><img src="http://i.imgur.com/2TH9Wyw.png" width="500px" style="margin-left: auto; margin-right: auto;" /></p>
 
 I ended up giving up on building PyPy after scrolling to the top of my log and seeing this message.
 
-<img src="http://i.imgur.com/ym5DkFj.png" width="500px" style="margin-left: auto; margin-right: auto;" />
+<p><img src="http://i.imgur.com/ym5DkFj.png" width="500px" style="margin-left: auto; margin-right: auto;" /></p>
 
 After some experimentation and intuition, negatives in extended slices turn out to be not so complicated. An easy way I'm using to remember how the negative step works is that you add one to start and stop, swap start and stop, and then calculate the slice using the positively stepped slice.
 
