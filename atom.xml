@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>http://mrdrozdov.com/</id>
+    <title>Andrew Drozdov&apos;s Blog</title>
+    <updated>2016-07-13T03:33:33Z</updated>
+    <author>
+        <name>Andrew Drozdov</name>
+        <email>andrew@mrdrozdov.com</email>
+        <uri>http://mrdrozdov.com</uri>
+    </author>
+    <link rel="alternate" href="http://mrdrozdov.com/"/>
+    <subtitle>A blog by Andrew Drozdov</subtitle>
+    <rights>All rights reserved 2016, Andrew Drozdov</rights>
+    <generator>Feed for Node.js</generator>
+    <contributor>
+        <name>Andrew Drozdov</name>
+        <email>andrew@mrdrozdov.com</email>
+    </contributor>
+    <entry>
+        <title type="html"><![CDATA[Python Extended Slices]]></title>
+        <id>http://mrdrozdov.com/python-extended-slices/</id>
+        <link href="http://mrdrozdov.com/python-extended-slices/">
+        </link>
+        <updated>2015-05-05T15:22:48Z</updated>
+        <content type="html"><![CDATA[<p>Last week, I paired with fellow RCer Alex Taipele on a Twitter Bot. It uses the LDA machine learning algorithm trained against a previous set of tweets (processed and tokenized of course) to create a topic (which is represented as an array of strings) that gets fed into the Giphy API. Beautiful, I know. Machine learning and Gifs aside, we wrote our bot in Python and got to use slices.</p>
+<p>Slices are awesome. They’re way more powerful than substring like methods in other languages, plus they give you a copy of the list rather than a reference (not a deep copy, dictionaries and objects in the list would still be referenced). One of the the great features of slices is the ability to designate a step like so:</p>
+<pre><code class="language-python">#
+# Slice syntax follows a_list[start:stop:step], with start and stop defaulting 
+# to the beginning and end of the list, and step defaulting to 1.
+#
+
+&gt;&gt;&gt; my_list = ['A', 'B', 'C', 'D', 'E']
+&gt;&gt;&gt; my_list[::1]
+['A', 'B', 'C', 'D', 'E']
+&gt;&gt;&gt; my_list[::2]
+['A', 'C', 'E']
+&gt;&gt;&gt; my_list[::3]
+['A', 'D']
+</code></pre>
+<blockquote>
+<p>If you’re curious, the nature of steps in slices is known as extended slices and they were brought in from conventions seen in NumPy. They are supported by Python version 1.4+. You can read more here: <a href="https://docs.python.org/2.3/whatsnew/section-slices.html">https://docs.python.org/2.3/whatsnew/section-slices.html</a></p>
+</blockquote>
+<p>There is a section in our code where we use a negative step.</p>
+<pre><code>topic_words = np.array(feature_names)[np.argsort(word_dist)][:-n_top_words:-1]
+</code></pre>
+<p>Negative steps alone aren’t too bad. Look at the following results.</p>
+<pre><code>&gt;&gt;&gt; my_list[::-1]
+['E', 'D', 'C', 'B', 'A']
+&gt;&gt;&gt; my_list[::-2]
+['E', 'C', 'A']
+&gt;&gt;&gt; my_list[::-3]
+['E', 'B']
+</code></pre>
+<p>It’s when we combine negative steps with a negative start or stop that things get confusing.</p>
+<pre><code>&gt;&gt;&gt; my_list[:-2:-1]
+['E']
+&gt;&gt;&gt; my_list[-2::-1]
+['D', 'C', 'B', 'A']
+</code></pre>
+<p>Huh? If we go through the Python source code, we may be able to find some hints. Looking through <a href="https://github.com/rfk/pypy">PyPy</a> (Python written in Python),there is something called a <a href="https://github.com/rfk/pypy/blob/master/pypy/objspace/std/sliceobject.py">SliceObject</a>, which has the following function.</p>
+<pre><code>def indices3(w_slice, space, length):
+    if space.is_w(w_slice.w_step, space.w_None):
+        step = 1
+    else:
+        step = _eval_slice_index(space, w_slice.w_step)
+        if step == 0:
+            raise OperationError(space.w_ValueError,
+                                 space.wrap(&quot;slice step cannot be zero&quot;))
+    if space.is_w(w_slice.w_start, space.w_None):
+        if step &lt; 0:
+            start = length - 1
+        else:
+            start = 0
+    else:
+        start = _eval_slice_index(space, w_slice.w_start)
+        if start &lt; 0:
+            start += length
+            if start &lt; 0:
+                if step &lt; 0:
+                    start = -1
+                else:
+                    start = 0
+        elif start &gt;= length:
+            if step &lt; 0:
+                start = length - 1
+            else:
+                start = length
+    if space.is_w(w_slice.w_stop, space.w_None):
+        if step &lt; 0:
+            stop = -1
+        else:
+            stop = length
+    else:
+        stop = _eval_slice_index(space, w_slice.w_stop)
+        if stop &lt; 0:
+            stop += length
+            if stop &lt; 0:
+                if step &lt; 0:
+                    stop = -1
+                else:
+                    stop = 0
+        elif stop &gt;= length:
+            if step &lt; 0:
+                stop = length - 1
+            else:
+                stop = length
+    return start, stop, step
+</code></pre>
+<p>This is actually not too helpful. It sets some defaults and enforces bounds for start and stop. That was a fun excercise anyway, plus I ended up attempting to build PyPy from scratch. After running make, I was eventually treated to this fractal like graphic that I suppose is an Easter Egg in PyPy.</p>
+<p><img src="http://i.imgur.com/2TH9Wyw.png" width="500px" style="margin-left: auto; margin-right: auto;" /></p>
+<p>I ended up giving up on building PyPy after scrolling to the top of my log and seeing this message.</p>
+<p><img src="http://i.imgur.com/ym5DkFj.png" width="500px" style="margin-left: auto; margin-right: auto;" /></p>
+<p>After some experimentation and intuition, negatives in extended slices turn out to be not so complicated. An easy way I’m using to remember how the negative step works is that you add one to start and stop, swap start and stop, and then calculate the slice using the positively stepped slice.</p>
+<pre><code># Example:
+#   my_list[-2:0:-1] == ['D', 'C', 'B'] == [x for x in reversed(my_list[1:-1:1])]
+
+# Example function:
+#   
+def pseudo_and_surely_buggy_extended_slice(my_list, start, stop, step):
+  if step &lt; 0:
+    return [x for x in reversed(my_list[stop+1:start+1:-step])]
+  else:
+    return my_list[start:stop:step]
+</code></pre>
+<blockquote>
+<p>I used a list comprehension becaused <code>reversed</code> returns an iterator rather than a proper list.</p>
+</blockquote>
+<p>Now that we understand extended slices, lets take a look at the original code where they were being used.</p>
+<pre><code>topic_words = np.array(feature_names)[np.argsort(word_dist)][:-n_top_words:-1]
+</code></pre>
+<p>The other cool strategy being used here belongs to NumPy arrays (imagine that we imported NumPy as np). NumPy arrays have a  feature that lets you pass an array of indices and return the elements that the indices designate, but in the order that the indices are in.</p>
+<pre><code>&gt;&gt;&gt; l1 = np.array(['A', 'B', 'C', 'D', 'E'])
+&gt;&gt;&gt; l1[5, 4, 3, 2, 1]
+['E', 'D', 'C', 'B', 'A']
+&gt;&gt;&gt; l1[3, 4, 5, 1, 2]
+['C', 'D', 'E', 'A', 'B']
+</code></pre>
+<p>NumPy also has a function called argsort that will sort of sort an array. Rather than return a sorted array, argsort returns a new array that at every index contains the index of the element that would be there if the initial array was sorted.</p>
+<pre><code>&gt;&gt;&gt; l2 = np.array(['D', 'C', 'B', 'E', 'A'])
+&gt;&gt;&gt; np.argsort(l2)
+[4, 3, 2, 5, 1]
+</code></pre>
+<p>Combining argsort with the cool strategy I previously mentioned lets you easily rearrange arrays to your liking, which is exactly what’s being done in our Twitter Bot’s <a href="https://github.com/ataipale/twitter_NLP_gif_bot">code</a>.</p>
+]]></content>
+        <author>
+            <name>Andrew Drozdov</name>
+            <email>andrew@mrdrozdov.com</email>
+            <uri>http://mrdrozdov.com</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Github Hoarding]]></title>
+        <id>http://mrdrozdov.com/github-hoarding/</id>
+        <link href="http://mrdrozdov.com/github-hoarding/">
+        </link>
+        <updated>2015-05-04T16:19:58Z</updated>
+        <content type="html"><![CDATA[<p>Over the weekend, I decided to do some spring cleaning for my Github account. I deleted about 40 repos (down to grand total of 12). If you’ve ever used Github, you’ve probably dealt with the “Please type in the name of the repository to confirm” safety. It would take ages to do this with the safety in place. Fortunately, Github has a REST API for all sorts of things, and it has the ability to delete repos. I put some instructions in this <a href="https://gist.github.com/mrdrozdov/1d23b1464b525c340278">gist</a> for how you to can efficiently delete repos.</p>
+<blockquote>
+<p>Where does the phrase <a href="http://www.etymonline.com/index.php?term=age">“to take ages”</a> come from? Does it literally mean that you’d have a few birthdays by the time the referred to event was over?</p>
+</blockquote>
+<p>All this cleaning got me curious. Where do I fall in the realm of Github repo hoarders? Using <a href="https://github.com/PyGithub/PyGithub">PyGithub</a> I collected some data on RCers Github accounts. Turns out I’m just above average.</p>
+<blockquote>
+<p>One thing to know about the <a href="https://developer.github.com/v3/repos/">Github API</a> is that unauthenticated requests are rate limited at 60 per hour. Authenticated ones are limited at 5000 per hour.</p>
+</blockquote>
+<blockquote>
+<p>To deal with rate limit, I used the Unix <code>at</code> command and collected my data on a Digital Ocean instance. An example command that I’d run would be <code>at now +2 hours</code> followed by <code>at&gt; python get-repo-stats.py &lt;starting-point&gt;</code> &gt; results.<starting-point>.out`. I ran my stat collecting script once first to approximate how far it’d get, which allowed me to estimate the intervals between each starting point. This is a bit hacky, but I threw this all together in about a day and a half. I’ll know better next time, I promise. ;)</p>
+</blockquote>
+<p>A chart showing users and their total repo counts (usernames removed):</p>
+<p><img src="http://i.imgur.com/0A4kvOZ.png" alt=""></p>
+<p>The average amount of repos per user were: 32</p>
+<p>The max repos of any user was: 442</p>
+<p>The 20 most common languages by repo count were:</p>
+<p><img src="http://i.imgur.com/dYyqsTQ.png" alt=""></p>
+<p>The 20 most common languages by bytes count were:</p>
+<p><img src="http://i.imgur.com/wTbRbpB.png" alt=""></p>
+<p>The data I used for the language charts is here: <a href="https://gist.github.com/mrdrozdov/c465d7f9b24d5897ea56">gist</a></p>
+<p>I had a bug in my code where I didn’t handle programming languages that had spaces in their name. The ones that gave me trouble were:</p>
+<ul>
+<li>AGS Script</li>
+<li>Common Lisp</li>
+<li>DCPU-16 ASM</li>
+<li>Emacs Lisp</li>
+<li>Game Maker Language</li>
+<li>Gettext Catalog</li>
+<li>Inform 7</li>
+<li>OpenEdge ABL</li>
+<li>Protocol Buffer</li>
+<li>Pure Data</li>
+<li>Ragel in Ruby Host</li>
+<li>Standard ML</li>
+<li>Visual Basic</li>
+</ul>
+]]></content>
+        <author>
+            <name>Andrew Drozdov</name>
+            <email>andrew@mrdrozdov.com</email>
+            <uri>http://mrdrozdov.com</uri>
+        </author>
+    </entry>
+</feed>
