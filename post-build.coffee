@@ -63,3 +63,4 @@ generateAtomFeed = (pages) ->
   })
 
   fs.writeFileSync "#{__dirname}/public/atom.xml", feed.render('atom-1.0')
+  fs.writeFileSync "#{__dirname}/public/CNAME", "mrdrozdov.com"
