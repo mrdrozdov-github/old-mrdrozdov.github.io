@@ -36,13 +36,16 @@ module.exports = React.createClass
         <meta name="twitter:title" content={title}/>
         <meta name="twitter:description" content={description}/>
 
+        <link rel="shortcut icon" href="/favicon.ico?v=00001" type="image/x-icon"/>
+        <link rel="icon" href="/favicon.ico?v=00001" type="image/x-icon"/>
+
+
         <meta property="og:title" content={title}/>
         <meta property="og:type" content="article"/>
         <meta property="og:url" content="http://blog.mrdrozdov.com#{@props.page?.path}"/>
         <meta property="og:description" content={description}/>
         <meta property="og:site_name" content="A blog by Andrew Drozdov"/>
         <meta property="fb:admins" content="17830631"/>
-        <link rel="shortcut icon" href={@props.favicon}/>
         <TypographyStyle/>
         {css}
         <style dangerouslySetInnerHTML={{__html: """
