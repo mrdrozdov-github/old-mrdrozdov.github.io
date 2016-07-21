@@ -31,4 +31,9 @@ module.exports = React.createClass
       <ul>
         {pageLinks}
       </ul>
+
+
+      <div>
+        <a href="http://old-blog.mrdrozdov.com">Old Blog</a>
+      </div>
     </div>
