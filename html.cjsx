@@ -50,7 +50,6 @@ module.exports = React.createClass
         {css}
         <style dangerouslySetInnerHTML={{__html: """
           body {
-            font-family: Helvetica, Arial, sans-serif;
             color: rgb(66,66,66);
           }
           h1,h2,h3,h4,h5,h6 {
@@ -59,9 +58,6 @@ module.exports = React.createClass
           a {
             color: rgb(42,93,173);
             text-decoration: none;
-          }
-          a:hover {
-            text-decoration: underline;
           }
         """}}/>
       </head>
