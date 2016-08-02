@@ -4,6 +4,12 @@
 
 */
 
+@media (min-width: 760px) {
+  .markdown pre {
+    width: 80%;
+  }
+}
+
 .markdown pre {
   display: block;
   padding: 9.5px;
