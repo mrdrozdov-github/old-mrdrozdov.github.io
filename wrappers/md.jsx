@@ -17,9 +17,9 @@ module.exports = React.createClass({
     var page = this.props.route.page;
 
     return (
-      <DocumentTitle title="#{post.title} | Andrew Drozdov">
+      <DocumentTitle title={ `${post.title} | Andrew Drozdov` }>
         <div className="markdown">
-          <h3><a href="#{page.path}">{post.title}</a></h3>
+          <h3><a href={ `${page.path}` }>{post.title}</a></h3>
           <small 
             style={{
               display: "block"
@@ -58,7 +58,7 @@ module.exports = React.createClass({
           <DisqusThread
             shortname="mrdrozdov"
             title={post.title}
-            url={"http://mrdrozdov.com#{this.props.route.page.path}"}
+            url={ `http://mrdrozdov.com${this.props.route.page.path}` }
           />
         </div>
       </DocumentTitle>
