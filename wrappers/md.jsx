@@ -39,7 +39,8 @@ module.exports = React.createClass({
           <ReadNext post={post} {...this.props}/>
           <p
             style={{
-              marginBottom: rhythm(6)
+              marginBottom: rhythm(6),
+              width: "100%"
             }}
           >
             <img

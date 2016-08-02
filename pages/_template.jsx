@@ -3,6 +3,7 @@ import {RouteHandler, Link} from 'react-router'
 import {Container, Grid, Breakpoint, Span} from 'react-responsive-grid'
 import DocumentTitle from 'react-document-title'
 import '../css/styles.css'
+import '../css/tufte.css'
 
 import {rhythm, fontSizeToMS} from 'blog-typography'
 import {config} from 'config'
@@ -51,8 +52,11 @@ module.exports = React.createClass({
         <Container
           style={{
             minWidth: rhythm(28),
-            maxWidth: rhythm(34),
-            padding: `${rhythm(4)} ${rhythm(1/2)} ${rhythm(2)} ${rhythm(1/2)}`
+            maxWidth: rhythm(56),
+            marginLeft: 0,
+            marginRight: 0,
+            paddingTop: `${rhythm(4)}`,
+            paddingBottom: `${rhythm(2)}`
           }}
         >
           {header}
