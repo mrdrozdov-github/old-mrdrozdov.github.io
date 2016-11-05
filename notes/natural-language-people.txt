@@ -1,0 +1,9 @@
+sam bowman - nyu
+kyunghyun cho - nyu
+yoshua bengio - u. of montreal
+andrew mccallum - u. of mass amherst
+hal daume III - u. of maryland
+honglak lee - u. of michigan
+charniak - brown university
+michael collins - stanford university
+benjamin van durme - johns hopkins

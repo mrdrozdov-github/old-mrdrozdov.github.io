@@ -1,0 +1,9 @@
+http://journalism.utexas.edu/undergraduate/curriculum
+
+http://courses.csail.mit.edu/6.851/spring14/
+
+https://cpbook.net/
+
+peter norvig thesis http://norvig.com/CSD-87-339.pdf
+
+jeff dean thesis http://www.cs.washington.edu/research/projects/cecil/www/pubs/jdean-thesis.html
